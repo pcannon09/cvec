@@ -60,6 +60,8 @@ bool cvec_atCap(const CVEC *_vec, const size_t _index);
 
 void *cvec_get(const CVEC *_vec, const size_t _index);
 
+void cvec_swap(CVEC *_a, CVEC *_b);
+
 // PRIVATE
 int __cvec_push(CVEC *_vec, void *_elem);
 int __cvec_pushFront(CVEC *_vec, void *_elem);

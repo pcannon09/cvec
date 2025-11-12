@@ -405,12 +405,25 @@ int cvec_reverse(CVEC *_vec)
 
 int cvec_shrink(CVEC *_vec)
 {
-	if (!_vec || !_vec->data) return CVEC_FAIL;
+    if (!_vec || !_vec->data) return CVEC_FAIL;
+    if (_vec->cap == _vec->size) return CVEC_SUCCESS;
 
-	if (_vec->cap < _vec->size)
-		_vec->cap = _vec->size + __CVEC_CAP_ADDITION;
+    void *newData = realloc(_vec->data, _vec->size * _vec->elemLen);
 
-	return CVEC_SUCCESS;
+    if (!newData) return CVEC_FAIL_ALLOCATION;
+
+    _vec->data = newData;
+    _vec->cap = _vec->size;
+
+    return CVEC_SUCCESS;
+}
+
+void cvec_swap(CVEC *_a, CVEC *_b)
+{
+	CVEC aTmp = *_a;
+
+	*_a = *_b;
+	*_b = aTmp;
 }
 
 bool __cvec_hasEnoughCap(const CVEC *_vec, const size_t _additions)
@@ -422,4 +435,10 @@ bool __cvec_hasEnoughCap(const CVEC *_vec, const size_t _additions)
 
     return _vec->size  <= _vec->cap - _additions;
 }
+
+void *cvec_begin(const CVEC *_vec)
+{ return _vec ? _vec->data : NULL; }
+
+void *cvec_end(const CVEC *_vec)
+{ return _vec ? (char*)_vec->data + _vec->size * _vec->elemLen : NULL; }
 

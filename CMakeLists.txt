@@ -76,7 +76,7 @@ else()
 endif()
 
 # Project Configuration
-set(C_STD 11)
+set(C_STD 99)
 
 set(CMAKE_C_STANDARD ${C_STD})
 set(CMAKE_C_STANDARD_REQUIRED ON)
