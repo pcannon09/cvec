@@ -454,3 +454,30 @@ void cvec_clear(CVEC *_vec)
 	cvec_emptyAll(_vec);
 }
 
+int cvec_split(CVEC *_vec, char *_str, const char *_del)
+{
+	if (!_vec || !_vec->initialized)
+		return CVEC_FAIL;
+
+    cvec_clear(_vec);
+
+    char chs[strlen(_str) + 1];
+
+    memcpy(chs, _str, strlen(_str) + 1);
+
+    char *tok = strtok(chs, _del);
+
+	while (tok != NULL)
+	{
+		char *copy = malloc(strlen(tok) + 1);
+
+    	strcpy(copy, tok);
+
+        __cvec_push(_vec, &copy);
+
+        tok = strtok(NULL, _del);
+	}
+
+    return CVEC_SUCCESS;
+}
+

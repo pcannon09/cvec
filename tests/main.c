@@ -5,29 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-int cvec_split(CVEC *_vec, char *_str, const char *_del)
-{
-    if (!_vec || !_vec->initialized)
-        return CVEC_FAIL;
-
-    cvec_clear(_vec);
-
-    char chs[strlen(_str) + 1];
-
-    memcpy(chs, _str, strlen(_str) + 1);
-
-    char *tok = strtok(chs, _del);
-
-	while (tok != NULL)
-	{
-    	__cvec_push(_vec, &tok);
-
-    	tok = strtok(NULL, _del);
-	}
-
-    return CVEC_SUCCESS;
-}
-
 // main() function helpers go here and beyond
 
 void printElements(CVEC vec)

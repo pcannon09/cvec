@@ -79,21 +79,6 @@ void cvec_swap(CVEC *_a, CVEC *_b);
 
 void cvec_clear(CVEC *_vec);
 
-static char *cvec_strdup(const char *_src)
-{
-    if (!_src) return NULL;
-
-    size_t len = strlen(_src) + 1;
-
-    char *out = malloc(len);
-
-    if (!out) return NULL;
-
-    memcpy(out, _src, len);
-
-    return out;
-}
-
 // PRIVATE
 int __cvec_push(CVEC *_vec, void *_elem);
 int __cvec_pushFront(CVEC *_vec, void *_elem);
