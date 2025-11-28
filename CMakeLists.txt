@@ -87,9 +87,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 # Directory Setup
-set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
-set(TESTS_DIR "${CMAKE_SOURCE_DIR}/tests")
-set(INC_DIR "${CMAKE_SOURCE_DIR}/inc/${projectName}")
+set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
+set(TESTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tests")
+set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/inc/${projectName}")
 
 # Source Files
 set(HEADERS
@@ -170,7 +170,7 @@ configure_file(
     @ONLY
 )
 
-add_custom_target(uninstall
+add_custom_target(cvec_uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake
     COMMENT "Uninstalling ${projectName} ${VERSION}-${VERSION_STATE}..."
 )

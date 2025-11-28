@@ -442,3 +442,15 @@ void *cvec_begin(const CVEC *_vec)
 void *cvec_end(const CVEC *_vec)
 { return _vec ? (char*)_vec->data + _vec->size * _vec->elemLen : NULL; }
 
+int cvec_emptyAll(CVEC *_vec)
+{
+	_vec->size = 0;
+
+	return CVEC_SUCCESS;
+}
+
+void cvec_clear(CVEC *_vec)
+{
+	cvec_emptyAll(_vec);
+}
+

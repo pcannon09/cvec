@@ -1,9 +1,26 @@
 #pragma once
 
+#include "CVECpredefines.h"
+
+#ifdef CVEC_sys_strdup
+# 	undef CVEC_sys_strdup
+#endif
+
+#if defined(CVEC_OS_WIN32)
+# 	include <string.h>
+# 	define CVEC_sys_strdup 		_strdup
+#else
+# 	ifdef _POSIX_C_SOURCE 
+# 		undef _POSIX_C_SOURCE 
+# 	endif
+# 	define _POSIX_C_SOURCE 200809L
+# 	include <string.h>
+# 	define CVEC_sys_strdup 		strdup
+#endif // defined(CVEC_OS_WIN32)
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <string.h>
 
 #define CVEC_NPOS 						-1
 #define CVEC_SUCCESS 					0
@@ -16,9 +33,6 @@
 #define CVEC_NOT_ENOUGH_CAP 			7
 
 #define __CVEC_CAP_ADDITION 			1
-
-// NOTE: Other macro names are here, such as:
-// CVEC_EXPOSE_PRIVATE_API
 
 #define __CVEC_SET_NULL(vec, ptrSym) \
 	vec ptrSym size = 0;             \
@@ -47,6 +61,7 @@ typedef struct
 CVEC cvec_init(int _cap, size_t _elemSize);
 CVEC cvec_initCopy(const CVEC *_src);
 
+int cvec_emptyAll(CVEC *_vec);
 int cvec_destroy(CVEC *_vec);
 int cvec_merge(CVEC *_toMerge, const CVEC *_input);
 int cvec_remove(CVEC *_vec, const size_t _index);
@@ -54,13 +69,30 @@ int cvec_popBack(CVEC *_vec);
 int cvec_popFront(CVEC *_vec);
 int cvec_reverse(CVEC *_vec);
 int cvec_shrink(CVEC *_vec);
+int cvec_split(CVEC *_vec, char *_str, const char *_del);
 
 bool cvec_at(const CVEC *_vec, const size_t _index);
 bool cvec_atCap(const CVEC *_vec, const size_t _index);
 
 void *cvec_get(const CVEC *_vec, const size_t _index);
-
 void cvec_swap(CVEC *_a, CVEC *_b);
+
+void cvec_clear(CVEC *_vec);
+
+static char *cvec_strdup(const char *_src)
+{
+    if (!_src) return NULL;
+
+    size_t len = strlen(_src) + 1;
+
+    char *out = malloc(len);
+
+    if (!out) return NULL;
+
+    memcpy(out, _src, len);
+
+    return out;
+}
 
 // PRIVATE
 int __cvec_push(CVEC *_vec, void *_elem);
