@@ -2,6 +2,8 @@
 
 ## 1.0.0
 
+### _"Functional C++ vector-like manipulation for C"_
+
 `CVEC` is a minimal and efficient C dynamic array library that offers type-agnostic vector behavior with optional capacity control and safe dynamic resizing. It provides an interface similar to `std::vector` in C++ but implemented in pure C with focus on simplicity, safety, and flexibility.
 
 ---
