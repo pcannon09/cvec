@@ -143,12 +143,19 @@ int main(void)
 	printf("Merged:\n");
 	printElements(vec);
 
-	printf("Splitting string...\n");
+	printf("Splitting string with comas (,)\n");
 
 	char *message = "Hello world, how are you, my friend?";
 
 	CVEC tokens = cvec_init(0, sizeof(char*));
 	cvec_split(&tokens, message, ",");
+
+	printElements(tokens);
+
+	printf("Splitting string with spaces ( )\n");
+	char *message2 = "Hey, how are you?";
+
+	cvec_split(&tokens, message2, " ");
 
 	printElements(tokens);
 
