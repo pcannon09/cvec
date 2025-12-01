@@ -6,6 +6,7 @@ CVEC cvec_init(int _cap, size_t _elemSize)
 
 	v.forceCap = false;
  	v.dynamicCap = true;
+	v.__usedSplit = false;
 
 	v.size = 0;
 	v.elemLen = _elemSize;
@@ -29,9 +30,30 @@ int cvec_destroy(CVEC *_vec)
 {
 	if (!_vec || !_vec->data) return CVEC_FAIL;
 
+	{
+		int result;
+
+		if ((_vec->__usedSplit) && (result = __cvec_destroySplit(_vec)) != CVEC_SUCCESS)
+			return result;
+	}
+
 	free(_vec->data); _vec->data = NULL;
 
 	__CVEC_SET_NULL(_vec, ->);
+
+	return CVEC_SUCCESS;
+}
+
+int __cvec_destroySplit(CVEC *_vec)
+{
+	if (!_vec || !_vec->initialized | !_vec->data) return CVEC_FAIL;
+
+	for (size_t i = 0; i < _vec->size; i++)
+    {
+        char *ptr = *(char**)cvec_get(_vec, i);
+
+        free(ptr); ptr = NULL;
+    }
 
 	return CVEC_SUCCESS;
 }
@@ -460,6 +482,7 @@ int cvec_split(CVEC *_vec, char *_str, const char *_del)
 		return CVEC_FAIL;
 
     cvec_clear(_vec);
+    _vec->__usedSplit = true;
 
     char chs[strlen(_str) + 1];
 

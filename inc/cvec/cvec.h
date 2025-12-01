@@ -45,6 +45,7 @@
 typedef struct
 {
 	bool initialized;
+	bool __usedSplit;
 
 	void *data;
 
@@ -87,6 +88,8 @@ int __cvec_set(CVEC *_vec, const size_t _index, void *_set);
 int __cvec_delIndex(CVEC *_vec, void *_elem, const size_t start);
 int __cvec_del(CVEC *_vec, void *_elem);
 int __cvec_find(const CVEC *_vec, void *_find);
+
+int __cvec_destroySplit(CVEC *_vec);
 
 bool __cvec_hasEnoughCap(const CVEC *_vec, const size_t _additions);
 
