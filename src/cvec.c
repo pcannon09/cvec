@@ -30,10 +30,11 @@ int cvec_destroy(CVEC *_vec)
 {
 	if (!_vec || !_vec->data) return CVEC_FAIL;
 
+	if (_vec->__usedSplit)
 	{
 		int result;
 
-		if ((_vec->__usedSplit) && (result = __cvec_destroySplit(_vec)) != CVEC_SUCCESS)
+		if ((result = __cvec_destroySplit(_vec)) != CVEC_SUCCESS)
 			return result;
 	}
 
@@ -46,14 +47,13 @@ int cvec_destroy(CVEC *_vec)
 
 int __cvec_destroySplit(CVEC *_vec)
 {
-	if (!_vec || !_vec->initialized | !_vec->data) return CVEC_FAIL;
+	if (!_vec || !_vec->initialized || !_vec->data) return CVEC_FAIL;
 
 	for (size_t i = 0; i < _vec->size; i++)
     {
-        char *ptr = *(char**)cvec_get(_vec, i);
-
-        free(ptr); ptr = NULL;
-    }
+    	free(*(char**)cvec_get(_vec, i));
+		*(char**)cvec_get(_vec, i) = NULL;
+	}
 
 	return CVEC_SUCCESS;
 }
@@ -151,11 +151,11 @@ int __cvec_pushIndex(CVEC *_vec, const size_t _index, void *_elem)
 	// If not inserting at the end, shift elements to the right
 	if (_index < _vec->size)
 	{
-		memmove(
-			(char*)_vec->data + (_index + __CVEC_CAP_ADDITION) * _vec->elemLen,
-			(char*)_vec->data + _index * _vec->elemLen,
-			(_vec->size - _index) * _vec->elemLen
-		);
+ 		memmove(
+    			(char*)_vec->data + (_index + __CVEC_CAP_ADDITION) * _vec->elemLen,
+    			(char*)_vec->data + _index * _vec->elemLen,
+    			(_vec->size - _index) * _vec->elemLen
+			   );
 	}
 
 	// Copy new element into the index
@@ -170,30 +170,16 @@ int __cvec_pushIndex(CVEC *_vec, const size_t _index, void *_elem)
 }
 
 bool cvec_at(const CVEC *_vec, const size_t _index)
-{
-	if (!_vec) return false;
-
-	if (_vec->size >= _index)
-		return true;
-
-	return false;
-}
+{ return _vec && _index < _vec->size; }
 
 bool cvec_atCap(const CVEC *_vec, const size_t _index)
-{
-	if (!_vec) return false;
-
-	if (_vec->cap >= _index)
-		return true;
-
-	return false;
-}
+{ return _vec && _index < _vec->cap; }
 
 void *cvec_get(const CVEC *_vec, const size_t _index)
 {
 	// Error: Out of bounds
-	if (_index >= _vec->size ||
-			!_vec || !_vec->data)
+	if (!_vec || !_vec->data ||
+			_index >= _vec->size)
 		return NULL;
 
 	return (char*)_vec->data + _index * _vec->elemLen;
