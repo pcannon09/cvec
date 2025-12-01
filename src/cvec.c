@@ -467,7 +467,11 @@ int cvec_split(CVEC *_vec, char *_str, const char *_del)
 	if (!_vec || !_vec->initialized)
 		return CVEC_FAIL;
 
+    if (_vec->__usedSplit)
+    	__cvec_destroySplit(_vec);
+
     cvec_clear(_vec);
+
     _vec->__usedSplit = true;
 
     char chs[strlen(_str) + 1];
