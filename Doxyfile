@@ -5,9 +5,9 @@
 #---------------------------------------------------------------------------
 
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = "CSTR"
+PROJECT_NAME           = "CVEC"
 PROJECT_NUMBER         = v1.0.0-build
-PROJECT_BRIEF          = "Simple yet powerful string manipulation in C"
+PROJECT_BRIEF          = "Functional C++ vector-like manipulation for C"
 OUTPUT_DIRECTORY       = docs/
 CREATE_SUBDIRS         = YES
 ALLOW_UNICODE_NAMES    = YES
@@ -161,7 +161,7 @@ ALIASES                = "code{1}=\code{.cpp} \1 \endcode" \
                          "complexity=\par Complexity:^^" \
                          "pre=\par Preconditions:^^" \
                          "post=\par Postconditions:^^"
-GENERATE_TAGFILE       = docs/cstr.tag
+GENERATE_TAGFILE       = docs/cvec.tag
 LAYOUT_FILE            = 
 CITE_BIB_FILES         = 
 

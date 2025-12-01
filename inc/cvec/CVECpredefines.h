@@ -10,11 +10,11 @@
 #define CVEC_DEFAULT_C_STD			201112L
 
 // Versioning
-#define CVEC_VERSION_MAJOR            0
-#define CVEC_VERSION_MINOR            0
-#define CVEC_VERSION_PATCH            1
+#define CVEC_VERSION_MAJOR              1
+#define CVEC_VERSION_MINOR              0
+#define CVEC_VERSION_PATCH              0
 
-#define CVEC_VERSION_STD              0
+#define CVEC_VERSION_STD                20251201
 
 // Version states:
 // * dev
@@ -36,7 +36,7 @@
 #endif
 
 #if _MSC_VER
-#	error "Currently not available for MSVC compilers"
+#	warning "Currently not available for MSVC compilers, still proceeding"
 #endif
 
 #ifdef WIN32
