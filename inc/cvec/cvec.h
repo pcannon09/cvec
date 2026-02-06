@@ -2,6 +2,17 @@
 
 #include "CVECpredefines.h"
 
+#ifdef __cplusplus
+# 	define __FSI_DIRUTILS_CVEC_OPEN 	extern "C" {
+# 	define __FSI_DIRUTILS_CVEC_CLOSE 	}
+#else
+# 	define __FSI_DIRUTILS_CVEC_OPEN
+# 	define __FSI_DIRUTILS_CVEC_CLOSE
+
+#endif // __cplusplus
+
+__FSI_DIRUTILS_CVEC_OPEN
+
 #ifdef CVEC_sys_strdup
 # 	undef CVEC_sys_strdup
 #endif
@@ -323,4 +334,6 @@ bool __cvec_hasEnoughCap(const CVEC *_vec, const size_t _additions);
 	int _CVEC_TMP_RETVAL_ = __cvec_find(vec, &_CVEC_TMP_X_VAR_); \
 	_CVEC_TMP_RETVAL_; \
 })
+
+__FSI_DIRUTILS_CVEC_CLOSE
 
