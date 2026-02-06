@@ -35,13 +35,8 @@
 #   define CVEC_DEV true
 #endif
 
-#if _MSC_VER
-#	warning "Currently not available for MSVC compilers, still proceeding"
-#endif
-
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 #	define CVEC_OS_WIN32
-#	warning "No full support for Windows"
 #elif defined(__APPLE__) || defined(__MACH__) || defined(Macintosh)
 #	define CVEC_OS_MACOS
 #elif defined(__linux__) || defined(__unix) || defined(__unix__)
